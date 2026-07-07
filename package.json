@@ -1,0 +1,23 @@
+{
+  "name": "learning-hub",
+  "version": "1.0.0",
+  "description": "Personal learning knowledge base — categorized, cross-linked notes with images, links and rich formatting. Interview-prep ready.",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "init-db": "node server/scripts/init-db.js",
+    "import": "node server/scripts/import-learning.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "marked": "^12.0.2",
+    "pg": "^8.12.0"
+  }
+}

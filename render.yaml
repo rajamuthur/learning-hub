@@ -1,0 +1,18 @@
+# Render Blueprint — deploys the web service on Render's free tier.
+# The database is Neon (free, persistent). Set DATABASE_URL in the Render
+# dashboard as a secret env var (do NOT commit it).
+services:
+  - type: web
+    name: learning-hub
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/config
+    envVars:
+      - key: DATABASE_URL
+        sync: false        # set manually in the dashboard (secret)
+      - key: EDIT_PASSCODE
+        sync: false        # optional; leave unset for open editing
+      - key: NODE_VERSION
+        value: 20.11.1

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning Hub</title>
+  <meta name="description" content="My personal, cross-linked learning knowledge base — interview-prep ready." />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Top bar (mobile + desktop) -->
+    <header class="topbar">
+      <button id="menuBtn" class="icon-btn" aria-label="Menu">&#9776;</button>
+      <a class="brand" href="#/">📚 <span>Learning Hub</span></a>
+      <div class="search-wrap">
+        <input id="searchInput" type="search" placeholder="Search all notes…" autocomplete="off" />
+      </div>
+      <button id="newNoteBtn" class="btn btn-primary">+ Note</button>
+    </header>
+
+    <div class="body">
+      <!-- Sidebar -->
+      <aside id="sidebar" class="sidebar">
+        <div class="side-section">
+          <div class="side-head">
+            <span>Categories</span>
+            <button id="addCatBtn" class="icon-btn small" title="Add category">+</button>
+          </div>
+          <nav id="categoryList" class="cat-list"></nav>
+        </div>
+        <div class="side-section">
+          <div class="side-head"><span>Views</span></div>
+          <nav class="cat-list">
+            <a href="#/" class="cat-item" data-view="all"><span class="dot" style="background:#64748b"></span> All notes</a>
+            <a href="#/planned" class="cat-item" data-view="planned"><span class="dot" style="background:#f59e0b"></span> 🎯 Future learning</a>
+          </nav>
+        </div>
+        <div class="side-foot">
+          <span id="lockState" class="lock-state"></span>
+        </div>
+      </aside>
+      <div id="overlay" class="overlay"></div>
+
+      <!-- Main -->
+      <main class="main">
+        <div id="listView" class="view">
+          <div class="view-head">
+            <h1 id="listTitle">All notes</h1>
+            <span id="listCount" class="muted"></span>
+          </div>
+          <div id="noteGrid" class="note-grid"></div>
+          <div id="emptyState" class="empty hidden"></div>
+        </div>
+
+        <article id="noteView" class="view hidden note-article"></article>
+      </main>
+    </div>
+  </div>
+
+  <!-- Editor modal -->
+  <div id="editorModal" class="modal hidden">
+    <div class="modal-card wide">
+      <div class="modal-head">
+        <h2 id="editorTitle">New note</h2>
+        <button class="icon-btn" data-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <input id="noteTitleInput" class="text-input" placeholder="Note title…" />
+        <div class="row">
+          <select id="noteCategorySelect" class="text-input"></select>
+          <label class="check"><input type="checkbox" id="notePlanned" /> Future learning (to-do)</label>
+        </div>
+        <label class="field-label">Content</label>
+        <div id="quillEditor"></div>
+        <label class="field-label">Related notes (cross-links)</label>
+        <div id="relatedPicker" class="related-picker"></div>
+      </div>
+      <div class="modal-foot">
+        <button id="deleteNoteBtn" class="btn btn-danger hidden">Delete</button>
+        <span class="spacer"></span>
+        <button class="btn" data-close>Cancel</button>
+        <button id="saveNoteBtn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category modal -->
+  <div id="catModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="catModalTitle">New category</h2>
+        <button class="icon-btn" data-close-cat>&times;</button>
+      </div>
+      <div class="modal-body">
+        <input id="catNameInput" class="text-input" placeholder="Category name (e.g. Kafka)" />
+        <label class="field-label">Colour</label>
+        <input id="catColorInput" type="color" value="#6366f1" />
+      </div>
+      <div class="modal-foot">
+        <button id="deleteCatBtn" class="btn btn-danger hidden">Delete</button>
+        <span class="spacer"></span>
+        <button class="btn" data-close-cat>Cancel</button>
+        <button id="saveCatBtn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Passcode modal -->
+  <div id="passModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-head"><h2>Unlock editing</h2></div>
+      <div class="modal-body">
+        <p class="muted">This hub is protected by an edit passcode.</p>
+        <input id="passInput" type="password" class="text-input" placeholder="Passcode" />
+      </div>
+      <div class="modal-foot">
+        <span class="spacer"></span>
+        <button class="btn" data-close-pass>Cancel</button>
+        <button id="passSubmit" class="btn btn-primary">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
